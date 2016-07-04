@@ -51,6 +51,9 @@ function App(defaultUrl) {
 
     that.ga = new GithubApi(username, repoName);
     that.ed = new EditorInterface(editor, this.ga, speed);
+    var state = 0;
+    that.sha = undefined;
+    that.canStart = false;
 
 
     this.getSha = function () {
@@ -61,11 +64,9 @@ function App(defaultUrl) {
             return urlParts[6];
         }
         console.log("no sha provided");
+        that.sha = "random";
     };
 
-    var state = 0;
-    that.sha = undefined;
-    that.canStart = false;
 
     this.update = function (sha) {
         if (!sha) {
@@ -98,10 +99,19 @@ function App(defaultUrl) {
         Mustache.parse(template);   // optional, speeds up future uses
         var rendered = Mustache.render(template, {commits: list});
         $('#commitListContainer').html(rendered);
+
         if (that.sha) {
             console.log("get commit completed later");
+
+            if (that.sha == "random") {
+                var item = list[Math.floor(Math.random() * list.length)];
+                that.sha = item.sha;
+            }
+
             that.update(that.sha);
         }
+
+
     });
 
 

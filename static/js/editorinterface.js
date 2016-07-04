@@ -149,7 +149,7 @@ function EditorInterface(editor, ga, speed) {
     this.github = ga;
     this.runAllChanges = function (files, parent) {
         that.showEditFile(files, 0, parent, function () {
-            console.log("completed show edit for all files")
+            notify("completed show edit for all files")
         });
     };
 
