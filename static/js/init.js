@@ -67,7 +67,28 @@ var githubUrl = "https://github.com/";
 
 $(window).on('hashchange', once);
 
+function random() {
+    $.ajax({
+        url: "https://api.github.com/search/repositories?sort=stars&order=desc&q=created:>2016-07-01&q=java",
+        success: function (res) {
+            var list = res.items;
+            var rand = list[Math.floor(Math.random() * list.length)];
+            window.location.hash = "#!" + rand.html_url;
+            window.location.reload(true);
+        }
+    })
+}
+
 function loadUrl(newHash) {
+
+    if (!newHash || newHash.length < 10 || newHash.indexOf("github.com/") < 0) {
+        console.log("bad url given to load");
+        if (!newHash || newHash.length < 1) {
+            random();
+        }
+        return;
+    }
+
     console.log("load ", newHash);
 
     if (newHash.substr(0, githubUrl.length) == githubUrl) {
@@ -122,7 +143,7 @@ noUiSlider.create(slider, {
 
 slider.noUiSlider.on("update", function (value) {
     value = parseInt(value[0]);
-    console.log("slide value ", value);
+    //console.log("slide value ", value);
     store.setItem("speed", value);
     speed.setSpeed(value);
 });
@@ -132,3 +153,7 @@ if (stored) {
 //        speedSlider.slider('setValue', stored);
     speed.setSpeed(stored);
 }
+
+$("#random").on("click", function () {
+    random();
+});
