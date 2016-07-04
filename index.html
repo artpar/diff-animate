@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+
+    <title>local</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bower_components/jstree/dist/themes/default-dark/style.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
+
+
+    <style>
+
+        #ace-editorid {
+            font-size: .9em;
+            font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+            height: 600px;
+        }
+
+        li {
+            cursor: hand;
+        }
+
+    </style>
+
+
+</head>
+<body>
+<script id="commitListTemplate" type="x-tmpl-mustache">
+                <ul class="list-group" id="commitList">
+                {{#commits}}
+                    <li class="list-group-item">
+                        <a class="text-muted" href="#!{{html_url}}">{{commit.message}}</a>
+                    </li>
+                {{/commits}}
+                </ul>
+
+
+
+
+
+</script>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-light bg-faded">
+            <form class="form-inline pull-md-left">
+                <input style="width: 500px" class="form-control" type="text" placeholder="Girhub url" id="githubUrl">
+                <button id="loadRepo" class="btn btn-success-outline">Load</button>
+            </form>
+        </nav>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="height: 600px; overflow-y: scroll">
+            <div class="row" id="commitListContainer">
+
+            </div>
+        </div>
+        <div class="col-md-6" id="editorContainer">
+            <div id="ace-editorid" class="row"></div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <ul class="list-group" id="notifications"></ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!--<script src='bower_components/gh3/vendors/jquery-2.1.0.min.js'></script>-->
+<script src="https://npmcdn.com/github-api/dist/GitHub.bundle.js"></script>
+<script src="bower_components/transparency/dist/transparency.min.js"></script>
+<script src="bower_components/treepath/treepath.js"></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js'></script>
+<script src='bower_components/jstree/dist/jstree.min.js'></script>
+<script src='bower_components/underscore/underscore.js'></script>
+<script src='bower_components/jsondiffpatch/public/build/jsondiffpatch-full.min.js'></script>
+<script src='bower_components/mustache.js/mustache.js'></script>
+<!--<script src='bower_components/jsdiff/diff.min.js'></script>-->
+
+<script src="parse.js"></script>
+<script src="githubapi.js"></script>
+<script src="editorinterface.js"></script>
+<script src="app.js"></script>
+<script src="init.js"></script>
+
+</body>
+</html>
+ 
