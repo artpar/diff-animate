@@ -1,7 +1,7 @@
 /**
  * Created by parth on 2/7/16.
  */
-jQuery.fn.render = Transparency.jQueryPlugin;
+//jQuery.fn.render = Transparency.jQueryPlugin;
 
 
 var DelayedLoop = function () {
@@ -89,6 +89,46 @@ once();
 
 
 function notify(msg) {
-    $("#notifications").append($("<pre class='list-group-item'></pre>").text(msg))
+    $("#notifications").append($("<div class='list-group-item'></div>").html(msg))
 }
 
+var store = window.localStorage;
+var stored = store.getItem("speed");
+function updateSize() {
+    var newHeight = $(window).height() - 62;
+//        console.log("resize to ", newHeight);
+    $('#ace-editorid').css("height", newHeight + "px");
+    $('#commitListContainer').css("height", newHeight + "px");
+    $('#third').css("height", newHeight + "px");
+    editor.resize();
+}
+$(window).on("resize", function () {
+    updateSize();
+});
+updateSize();
+
+//    var slider = $("#slider").rangeSlider();
+var slider = document.getElementById('slider');
+
+noUiSlider.create(slider, {
+    start: 80, // Handle start position
+    connect: false, // Display a colored bar between the handles
+    orientation: 'horizontal', // Orient the slider vertically
+    range: { // Slider can select '0' to '100'
+        'min': 0,
+        'max': 100
+    }
+});
+
+slider.noUiSlider.on("update", function (value) {
+    value = parseInt(value[0]);
+    console.log("slide value ", value);
+    store.setItem("speed", value);
+    speed.setSpeed(value);
+});
+if (stored) {
+    console.log("Stored value ", stored);
+//        speedSlider.setValue(stored)
+//        speedSlider.slider('setValue', stored);
+    speed.setSpeed(stored);
+}

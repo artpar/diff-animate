@@ -18,16 +18,9 @@
     "bootstrap": "v4.0.0-alpha.2",
     "jquery": "^3.0.0",
     "ace": "^1.2.3",
-    "jstree": "^3.3.1",
     "underscore": "^1.8.3",
-    "treepath": "vasilionjea/treepath",
-    "gh3": "^1.0.3",
-    "mithril": "^0.2.5",
-    "transparency": "^0.11.0",
     "mustache.js": "mustache#^2.2.1",
     "jsdiff": "^2.2.2",
-    "jsondiffpatch": "^0.1.43",
-    "JsonDiffPatch": "bengotow/JsonDiffPatch#^0.0.5",
     "components-font-awesome": "^4.6.3"
   },
   "resolutions": {

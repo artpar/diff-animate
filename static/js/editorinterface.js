@@ -1,11 +1,11 @@
 /**
  * Created by parth on 4/7/16.
  */
-function EditorInterface(editor, ga) {
+function EditorInterface(editor, ga, speed) {
     var that = this;
+    that.speed = speed;
     this.editor = editor;
     this.github = ga;
-    var base = 250;
     this.runAllChanges = function (files, parent) {
         that.showEditFile(files, 0, parent, function () {
             console.log("completed show edit for all files")
@@ -41,7 +41,7 @@ function EditorInterface(editor, ga) {
     that.at = 0;
 
     this.showSingleChange = function (change, callback) {
-        console.log("delay for ", change);
+        //console.log("delay for ", change);
         //editor.gotoLine(change.ln1 || change.ln);
 
         var lnNo = change.ln1 || change.ln;
@@ -61,7 +61,7 @@ function EditorInterface(editor, ga) {
                 editor.removeLines();
                 setTimeout(function () {
                     callback();
-                }, base);
+                }, speed.getSpeed());
             } else if (change.type == "normal") {
                 callback();
             } else if (change.type == "add") {
@@ -72,11 +72,11 @@ function EditorInterface(editor, ga) {
                 setTimeout(function () {
                     that.rel = that.rel + 1;
                     var str = change.content.trim().substring(1);
-                    writeNext(str, editor, base / 5, function () {
-                        console.log("finished writing ", change.content);
+                    writeNext(str, editor, speed, function () {
+                        //console.log("finished writing ", change.content);
                         callback();
                     });
-                }, 150);
+                }, 80);
             }
         });
     };
@@ -99,7 +99,7 @@ function EditorInterface(editor, ga) {
         var chunk = chunks[index];
         var changes = chunk.changes;
         that.showChangeEdit(changes, 0, function () {
-            console.log("completed all changes in the chunk ", changes);
+            //console.log("completed all changes in the chunk ", changes);
             that.showChunkEdit(chunks, index + 1, callback);
         });
     };
@@ -115,10 +115,10 @@ function EditorInterface(editor, ga) {
         that.github.getFile(filePath + "?ref=" + parent, function (contents) {
             editor.getSession().setMode("ace/mode/dockerfile");
             editor.setValue(contents);
-            console.log("changes", file);
+            //console.log("changes", file);
             var chunks = file.chunks;
             that.showChunkEdit(chunks, 0, function () {
-                console.log("completed all chunks");
+                //console.log("completed all chunks");
                 that.showEditFile(files, index + 1, parent, callback)
             })
         });

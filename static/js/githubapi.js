@@ -4,13 +4,18 @@
 
 function GithubApi(username, repoName) {
     var github = "https://api.github.com";
+    var githubHtml = "https://github.com";
     var repoFullName = username + "/" + repoName;
     var commitBase = github + "/repos/" + repoFullName + "/commits";
+    var commitBaseHtml = githubHtml + "/" + repoFullName + "/commits";
     var fileBase = github + "/repos/" + repoFullName + "/contents";
+    var fileBaseHtml = githubHtml + "/" + repoFullName + "/contents";
 
 
     this.getDiffBySha = function (sha, cb) {
-        notify("Get diff of sha " + sha);
+        var msg = $("<span>Getting </span>");
+        msg.append($("<a>diff of sha" + sha + "</a>").attr("href", commitBase + "/" + sha).attr("target", "_blank"));
+        notify(msg.html());
         this.request(commitBase + "/" + sha, cb);
     };
 

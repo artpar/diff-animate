@@ -2,7 +2,7 @@
  * Created by parth on 2/7/16.
  */
 
-var writeNext = function (text, editor, delay, complete) {
+var writeNext = function (text, editor, speed, complete) {
     if (!text || text.length < 1) {
         if (complete && typeof complete == "function") {
             complete();
@@ -11,9 +11,23 @@ var writeNext = function (text, editor, delay, complete) {
     }
     editor.insert(text[0]);
     setTimeout(function () {
-        writeNext(text.substring(1), editor, delay, complete)
-    }, delay)
+        writeNext(text.substring(1), editor, speed, complete)
+    }, speed.getSpeed() / 10)
 };
+
+
+var Speed = function () {
+    this.speed = 120;
+    this.setSpeed = function (s) {
+        this.speed = s * 10;
+    };
+    this.getSpeed = function () {
+        return this.speed * 2;
+    };
+    return this;
+};
+
+var speed = new Speed();
 
 $("#loadRepo").on("click", function () {
     $("#editorContainer").html('<div id="ace-editorid" class="row"></div>');
@@ -36,7 +50,7 @@ function App(defaultUrl) {
     $("#githubUrl").val(githubUrl + username + "/" + repoName);
 
     that.ga = new GithubApi(username, repoName);
-    that.ed = new EditorInterface(editor, this.ga);
+    that.ed = new EditorInterface(editor, this.ga, speed);
 
 
     this.getSha = function () {

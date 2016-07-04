@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html>
 <head>
     <meta charset="UTF-8">
 
 
     <title>local</title>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="bower_components/jstree/dist/themes/default-dark/style.min.css">
+    <!--<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="bower_components/jstree/dist/themes/default-dark/style.min.css">-->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    <link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">
-
+    <!--<link rel="stylesheet" href="bower_components/components-font-awesome/css/font-awesome.min.css">-->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/css/bootstrap-slider.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.css">
 
     <style>
 
         #ace-editorid {
             font-size: .9em;
             font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
-            height: 600px;
         }
 
         li {
@@ -33,6 +33,7 @@
                 {{#commits}}
                     <li class="list-group-item">
                         <a class="text-muted" href="#!{{html_url}}">{{commit.message}}</a>
+                        <a target="_blank" href="{{html_url}}"><span class="fa fa-github"></span> </a>
                     </li>
                 {{/commits}}
                 </ul>
@@ -45,15 +46,28 @@
 
 <div class="container-fluid">
     <div class="row">
-        <nav class="navbar navbar-light bg-faded">
-            <form class="form-inline pull-md-left">
-                <input style="width: 500px" class="form-control" type="text" placeholder="Girhub url" id="githubUrl">
-                <button id="loadRepo" class="btn btn-success-outline">Load</button>
-            </form>
-        </nav>
+        <div class="col-md-6">
+
+            <nav class="navbar navbar-light">
+                <form class="form-inline pull-md-left">
+                    <input style="width: 500px" class="form-control" type="text" placeholder="Girhub url"
+                           id="githubUrl">
+                    <button id="loadRepo" class="btn btn-success-outline">Load</button>
+                </form>
+            </nav>
+
+        </div>
+        <div class="col-md-6">
+            <nav class="navbar navbar-light">
+                <form class="form-inline pull-md-right">
+                    <div id="slider"></div>
+                </form>
+            </nav>
+        </div>
+
     </div>
     <div class="row">
-        <div class="col-md-3" style="height: 600px; overflow-y: scroll">
+        <div class="col-md-3" style="overflow-y: scroll">
             <div class="row" id="commitListContainer">
 
             </div>
@@ -62,7 +76,7 @@
             <div id="ace-editorid" class="row"></div>
         </div>
         <div class="col-md-3">
-            <div class="row">
+            <div class="row" id="third">
                 <ul class="list-group" id="notifications"></ul>
             </div>
         </div>
@@ -71,25 +85,24 @@
 </div>
 
 
-<!--<script src='bower_components/gh3/vendors/jquery-2.1.0.min.js'></script>-->
-<script src="https://npmcdn.com/github-api/dist/GitHub.bundle.js"></script>
-<script src="bower_components/transparency/dist/transparency.min.js"></script>
-<script src="bower_components/treepath/treepath.js"></script>
-<script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src='//cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js'></script>
-<script src='//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js'></script>
-<script src='bower_components/jstree/dist/jstree.min.js'></script>
-<script src='bower_components/underscore/underscore.js'></script>
-<script src='bower_components/jsondiffpatch/public/build/jsondiffpatch-full.min.js'></script>
-<script src='bower_components/mustache.js/mustache.js'></script>
+<script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src='//cdnjs.cloudflare.com/ajax/libs/ace/1.2.3/ace.js'></script>
+<!--<script type="text/javascript" src='bower_components/underscore/underscore.js'></script>-->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mustache.js/2.2.1/mustache.min.js"></script>
+<script type="text/javascript"
+        src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/7.1.0/bootstrap-slider.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/noUiSlider/8.5.1/nouislider.min.js"></script>
+<!--<script src='bower_components/mustache.js/mustache.js'></script>-->
+<!--<script src='bower_components/seiyria-bootstrap-slider/dist/bootstrap-slider.min.js'></script>-->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jsdiff/2.2.3/diff.min.js"></script>
 <!--<script src='bower_components/jsdiff/diff.min.js'></script>-->
 
-<script src="parse.js"></script>
-<script src="githubapi.js"></script>
-<script src="editorinterface.js"></script>
-<script src="app.js"></script>
-<script src="init.js"></script>
+<script src="static/js/parse.js"></script>
+<script src="static/js/githubapi.js"></script>
+<script src="static/js/editorinterface.js"></script>
+<script src="static/js/app.js"></script>
+<script src="static/js/init.js"></script>
 
 </body>
-</html>
- 
+
