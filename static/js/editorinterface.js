@@ -16,9 +16,9 @@ function EditorInterface(editor, ga, speed) {
     that.navigate = function (toLineNumber, callback) {
         var currentLine = editor.getCursorPosition().row;
 
-        if (currentLine > 25) {
-            editor.scrollToLine(currentLine - 25);
-        }
+        //if (currentLine > 25) {
+        editor.scrollToLine(currentLine - 25);
+        //}
 
         if (currentLine != toLineNumber) {
             if (toLineNumber < currentLine) {
