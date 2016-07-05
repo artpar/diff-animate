@@ -68,6 +68,9 @@ var githubUrl = "https://github.com/";
 $(window).on('hashchange', once);
 
 function random() {
+    window.location.hash = "#!" + "https://github.com/kennyledet/Algorithm-Implementations";
+    window.location.reload(true);
+    return;
     $.ajax({
         url: "https://api.github.com/search/repositories?sort=stars&order=desc&q=created:>2016-07-01&q=java",
         success: function (res) {

@@ -73,7 +73,7 @@ var modes = [{"value": "abap", "name": "ABAP"},
     {"value": "luapage", "name": "LuaPage"},
     {"value": "lucene", "name": "Lucene"},
     {"value": "makefile", "name": "Makefile", "extension": "makefile"},
-    {"value": "markdown", "name": "Markdown", "extension": "md"},
+    {"value": "markdown", "name": "Markdown", "extension": ["md", "readme"]},
     {"value": "mask", "name": "Mask"},
     {"value": "matlab", "name": "MATLAB"},
     {"value": "maze", "name": "Maze"},
@@ -130,7 +130,7 @@ var modes = [{"value": "abap", "name": "ABAP"},
     {"value": "verilog", "name": "Verilog"},
     {"value": "vhdl", "name": "VHDL"},
     {"value": "wollok", "name": "Wollok"},
-    {"value": "xml", "name": "XML"},
+    {"value": "xml", "name": "XML", "extension": "xml"},
     {"value": "xquery", "name": "XQuery"},
     {"value": "yaml", "name": "YAML", "extension": "yaml"},
     {"value": "django", "name": "Django", "extension": "py"}
@@ -154,7 +154,7 @@ function EditorInterface(editor, ga, speed) {
     };
 
 
-    that.navigate = function (toLineNumber, callback) {
+    that.navigate = function (toLineNumber, callback, speed) {
         if (toLineNumber < 1) {
             callback();
             return;
@@ -176,7 +176,7 @@ function EditorInterface(editor, ga, speed) {
             }
             setTimeout(function () {
                 that.navigate(toLineNumber, callback);
-            }, 50);
+            }, speed.getSpeed() / 10);
         } else {
             callback();
         }
@@ -221,7 +221,7 @@ function EditorInterface(editor, ga, speed) {
                     });
                 }, 80);
             }
-        });
+        }, speed);
     };
 
     this.showChangeEdit = function (changes, index, callback) {
